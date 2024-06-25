@@ -2,6 +2,7 @@ package db;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -19,7 +20,7 @@ public class DBManual {
 
 			// Defina as informações de conexão com o banco de dados
 
-			String url = "jdbc:mysql://localhost:3306/jdbc";
+			String url = "jdbc:mysql://localhost:3306/coursejdbc";
 
 			String usuario = "root";
 
@@ -28,6 +29,16 @@ public class DBManual {
 			// Crie a conexão
 
 			conexao = DriverManager.getConnection(url, usuario, senha);
+
+			if (conexao != null) {
+
+				System.out.println("Conexão bem-sucedida!");
+
+			} else {
+
+				System.out.println("Não foi possível conectar ao banco de dados.");
+
+			}
 
 		} catch (ClassNotFoundException e) {
 			throw new DbException(e.getMessage());
@@ -57,7 +68,7 @@ public class DBManual {
 		}
 		
 		public static void closeStatement(Statement st) {
-			if(st != null) {
+			if (st != null) {
 				try {
 					st.close();
 				} catch (SQLException e) {
@@ -66,5 +77,14 @@ public class DBManual {
 			}
 		}
 		
+		public static void closeResultSet(ResultSet rs) {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					throw new DbException(e.getMessage());
+				}
+			}
+		}
 
 }
